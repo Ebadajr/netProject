@@ -7,7 +7,9 @@ var MongoClient= require('mongodb').MongoClient;
 var app = express();
 var un = null;
 var pw = null;
-var want=[];
+var want = [];
+const app = express();
+const PORT = process.env.PORT || 3030;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -42,8 +44,8 @@ app.post('/', function(req,res){
 	else{
 		MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 		if(err) throw err;
-		var db=client.db('MyDB');
-		var firstColl=db.collection('firstColl');
+		var db=client.db('myDB');
+			var firstColl = db.collection('myCollection');
 		firstColl.find({username:x, password:y}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 		{   
 			
@@ -75,8 +77,25 @@ app.post('/', function(req,res){
 		res.render('wanttogo');
 	});
 	app.post('/search',function(req,res){
-		res.render('searchresults');
-	});
+		  var value = req.body.Search;
+		  const list_of_cities = ["inca trail to machu picchu", "annapurna circuit", "bali island", "santorini island","paris", "rome"];
+		  var list_of_results = [];
+		  if (list_of_cities[0].includes(value.toString().toLowerCase()))
+			list_of_results = list_of_results + [list_of_cities[0]];
+		  if (list_of_cities[1].includes(value.toString().toLowerCase()))
+			list_of_results = list_of_results + [list_of_cities[1]];
+		  if (list_of_cities[2].includes(value.toString().toLowerCase()))
+			list_of_results = list_of_results + [list_of_cities[2]];
+		  if (list_of_cities[3].includes(value.toString().toLowerCase()))
+			list_of_results = list_of_results + [list_of_cities[3]];
+		  if (list_of_cities[4].includes(value.toString().toLowerCase()))
+			list_of_results = list_of_results + [list_of_cities[4]];
+		  if (list_of_cities[5].includes(value.toString().toLowerCase()))
+			list_of_results = list_of_results + [list_of_cities[5]];
+			res.render('searchresults', {results: list_of_results});
+		  console.log(value);
+		  res.render('searchresults');
+});
 	app.get('/hiking',function(req,res){
 		res.render('hiking');
 	});
@@ -89,8 +108,8 @@ app.post('/', function(req,res){
 	app.post('/bali',function(req,res){
 		MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 			if(err) throw err;
-			var db=client.db('MyDB');
-			var firstColl=db.collection('firstColl');
+			var db=client.db('myDB');
+			var firstColl = db.collection('myCollection');
 			firstColl.find({username:un, password:pw}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 			{   
 			
@@ -120,8 +139,8 @@ app.post('/', function(req,res){
 	app.post('/santorini',function(req,res){
 		MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 			if(err) throw err;
-			var db=client.db('MyDB');
-			var firstColl=db.collection('firstColl');
+			var db=client.db('myDB');
+			var firstColl = db.collection('myCollection');
 			firstColl.find({username:un, password:pw}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 			{   
 			
@@ -147,8 +166,8 @@ app.post('/', function(req,res){
 	app.post('/inca',function(req,res){
 		MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 			if(err) throw err;
-			var db=client.db('MyDB');
-			var firstColl=db.collection('firstColl');
+			var db=client.db('myDB');
+			var firstColl = db.collection('myCollection');
 			firstColl.find({username:un, password:pw}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 			{   
 			if(docs.length > 0) //if exists
@@ -174,8 +193,8 @@ app.post('/', function(req,res){
 	app.post('/paris',function(req,res){
 		MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 			if(err) throw err;
-			var db=client.db('MyDB');
-			var firstColl=db.collection('firstColl');
+			var db=client.db('myDB');
+			var firstColl = db.collection('myCollection');
 			firstColl.find({username:un, password:pw}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 			{   
 			if(docs.length > 0) //if exists
@@ -201,8 +220,8 @@ app.post('/', function(req,res){
 	app.post('/rome',function(req,res){
 		MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 			if(err) throw err;
-			var db=client.db('MyDB');
-			var firstColl=db.collection('firstColl');
+			var db=client.db('myDB');
+			var firstColl = db.collection('myCollection');
 			firstColl.find({username:un, password:pw}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 			{   
 			
@@ -229,8 +248,8 @@ app.post('/', function(req,res){
 	app.post('/annapurna',function(req,res){
 		MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 			if(err) throw err;
-			var db=client.db('MyDB');
-			var firstColl=db.collection('firstColl');
+			var db=client.db('myDB');
+			var firstColl = db.collection('myCollection');
 			firstColl.find({username:un, password:pw}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 			{   
 			
@@ -253,8 +272,8 @@ app.post('/', function(req,res){
 	var c=req.body.password;
 	MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 	if(err) throw err;
-	var db=client.db('MyDB');
-	var firstColl=db.collection('firstColl');
+	var db=client.db('myDB');
+		var firstColl = db.collection('myCollection');
 	firstColl.find({username:u, password:c}).toArray(function(err, docs) //find if documents that satisfy the criteria exist
 {     
     if(docs.length > 0) //if exists
@@ -267,7 +286,8 @@ app.post('/', function(req,res){
 		 un = u;
 		 pw = c;
 		 want=[];
-		res.render('home');
+		 alert("Account created succesfully!");
+		 res.render('login');
     }
 });
 	
@@ -283,7 +303,9 @@ MongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
 });
 
 
-
+app.listen(PORT, () => {
+	console.log(`server started on port ${PORT}`);
+});
 
 
 
